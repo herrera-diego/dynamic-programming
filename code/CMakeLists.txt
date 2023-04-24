@@ -4,3 +4,5 @@ project(dp)
 # Add the src/ directory
 add_subdirectory(src)
 
+add_subdirectory(unittest)
+
