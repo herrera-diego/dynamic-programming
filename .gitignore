@@ -34,3 +34,6 @@
 
 #CMake Files
 CMakeFiles/
+
+# Build folder
+build/
