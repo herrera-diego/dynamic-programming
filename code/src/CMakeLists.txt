@@ -1,6 +1,12 @@
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(dp main.cpp)
+# Set the source files for your target
+set(SOURCES
+    main.cpp
+    dplib.cpp
+)
+
+add_executable(dp ${SOURCES})
 
 # Define the custom command and target to copy the executable to the bin/ directory
 add_custom_command(TARGET dp POST_BUILD

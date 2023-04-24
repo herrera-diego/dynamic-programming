@@ -5,6 +5,8 @@
 #include <unistd.h> /* read, write, pipe, _exit */
 #include <string.h>
 
+#include "dplib.h"
+
 
 using namespace std;
 
@@ -25,6 +27,8 @@ int main (int argc, char **argv)
 {
     int c;
     int n = 5;
+    string input1;
+    string input2;
 
     while (true)
     {
@@ -35,7 +39,8 @@ int main (int argc, char **argv)
             {"brief",   no_argument,       &verbose_flag, 0},
             /* These options don’t set a flag.
                 We distinguish them by their indices. */
-
+            {"input",       required_argument,  0,  'i'}, 
+            {"algorithm",   required_argument,  0,  'a'}, 
             {"number",      required_argument,  0,  'n'},  
             {"help",        no_argument,        0,  'h'}, 
             {0, 0, 0, 0}
@@ -44,7 +49,7 @@ int main (int argc, char **argv)
         /* getopt_long stores the option index here. */
         int option_index = 0;
 
-        c = getopt_long (argc, argv, "hn:",
+        c = getopt_long (argc, argv, "hn:i:a:",
                         long_options, &option_index);
 
       
@@ -64,7 +69,31 @@ int main (int argc, char **argv)
                     printf (" with arg %s", optarg);
                 printf ("\n");
                 break;
-            
+            case 'a':
+                if(strcmp(optarg,"lcs")==0)
+                {
+                    cout << "Least Common String" << endl;
+                    dplib  dp;
+                    int size1 = input1.length();
+                    int size2 = input2.length();
+                    int result = dp.lcs(input1,input2,size1,size2);
+                    cout << "Length of LCS is " <<result << endl;
+                }
+                break;
+            case 'i':
+            {
+                string input = optarg;
+                size_t pos = 0;
+                pos = input.find(",");
+                if (pos == string::npos) {
+                    cerr << "Error: Invalid input format. Must be in the format \"input1,input2\"" << endl;
+                    break;
+                }
+                input1 = input.substr(0, pos);
+                input2 = input.substr(pos+1);
+                cout << "Inputs: " <<input1 <<" - "<<input2<< endl;
+                break;
+            }
             case 'n':      
                 n = atoi(optarg);                
                 break;
